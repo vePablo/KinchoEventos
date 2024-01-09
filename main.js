@@ -1,65 +1,82 @@
-// variables de costos
-let costoInvitados = 1500;
+// ----------------------- segunda entrega
 
-// captura de la cantidad de invitados
+const valorPersona = 1500;
+const otrosServicios = [
+    { nombre: "Fotografía y Filmación", valor: 800 },
+    { nombre: "Música y Luces", valor: 10000 },
+    { nombre: "Servicio de Mozos", valor: 600 },
+    { nombre: "Animación Infantil", valor: 700 },
+    { nombre: "Candy bar", valor: 600 },
+];
+
+let serviciosAgregados = [];
+
 function calcularPresupuesto() {
-    let cantidadDeInvitados;
-    let cantidadMenores;
-    let cantidadAdultos;
+    let nInvitados;
+    let nAdultos;
+    let nMenores;
 
-// Bucle while para obtener un valor valido 
-while (true) {
-    let input = prompt("Cuantos invitados tienes?");
-    cantidadDeInvitados = parseInt(input);
+    while (true) {
+        let input = prompt('¿Cuántos invitados son?');
+        nInvitados = parseInt(input);
 
-    if (!isNaN(cantidadDeInvitados) && cantidadDeInvitados >= 0 && cantidadDeInvitados <= 60) {
-        break;  
-    } else {
-        alert("Por favor ingresa un valor valido, recuerda que 60 personas es nuestra capacidad maxima");
+        if (!isNaN(nInvitados) && nInvitados >= 0 && nInvitados <= 60) {
+            break;
+        } else {
+            alert('Ingresa un valor válido. El salón tiene capacidad máxima de 60');
+        }
     }
-}
 
-// do-while para solicitar cantidad de niños y adultos
+    do {
+        let input = prompt('¿Cuántos de estos son adultos?');
+        nAdultos = parseInt(input);
+        if (isNaN(nAdultos) || nAdultos < 0) {
+            alert('Tu evento debe estar supervisado por al menos un adulto. Por favor, ingresa un valor válido');
+        }
+    } while (isNaN(nAdultos) || nAdultos < 0);
 
-do {
-    let input = prompt("Cuantos de estos son niños?");
-    cantidadMenores = parseInt(input);
+    nMenores = nInvitados - nAdultos;
 
-    if(isNaN(cantidadMenores) || cantidadMenores < 0){
-        alert("Por favor ingresa un valor valido de niños");
+    const presupuestoTotal = nInvitados * valorPersona;
+
+    let serviciosTexto = "Otros servicios:\n";
+
+    for (let i = 0; i < otrosServicios.length; i++) {
+        serviciosTexto += `${i + 1}. ${otrosServicios[i].nombre}: $${otrosServicios[i].valor}\n`;
     }
-}while (isNaN(cantidadMenores) || cantidadMenores < 0); 
 
-do {
-    let input = prompt("Cuantos de estos son adultos ?");
-    cantidadAdultos = parseInt(input);
+    serviciosTexto += `${otrosServicios.length + 1}. Terminar selección de servicios`;
 
-    if(isNaN(cantidadAdultos) || cantidadAdultos < 0 ){
-        alert("Por favor ingresa una cantidad valida, recuerda que debe tener la supervision de al menos un adulto");
+    alert(serviciosTexto);
+
+    while (true) {
+        let seleccion = prompt('Selecciona un servicio por número o elige en numero 6 para terminar :');
+        seleccion = parseInt(seleccion);
+
+        if (!isNaN(seleccion) && seleccion >= 1 && seleccion <= otrosServicios.length + 1) {
+            if (seleccion === otrosServicios.length + 1) {
+                break;
+            } else {
+                serviciosAgregados.push(otrosServicios[seleccion - 1]);
+                alert(`Agregaste ${otrosServicios[seleccion - 1].nombre} a tu presupuesto.`);
+            }
+        } else {
+            alert('Por favor, ingresa un número válido.');
+        }
     }
-}while (isNaN(cantidadAdultos) || cantidadAdultos < 0);
 
-// calculamos la cantidad de adultos y niños y detectamos si hay alguna diferencia con el valor de invitados
+    // calcular el costo total de los servicios agregados
+    let costoServiciosAgregados = serviciosAgregados.reduce((total, servicio) => total + servicio.valor, 0);
 
-if (cantidadMenores + cantidadAdultos !== cantidadDeInvitados) {
-    alert("La suma de niños y adultos no coincide con la cantidad total de invitados");
-    return;
+    // calcular el presupuesto final
+    const presupuestoFinal = presupuestoTotal + costoServiciosAgregados;
+
+    document.write('<h2>Resumen del presupuesto</h2>');
+    document.write(`<p>Cantidad de adultos: ${nAdultos}</p>`);
+    document.write(`<p>Cantidad de niños: ${nMenores}</p>`);
+    document.write(`<p>Presupuesto total: $${presupuestoTotal}</p>`);
+    document.write(`<p>Costo total de servicios agregados: $${costoServiciosAgregados}</p>`);
+    document.write(`<p>Presupuesto final con servicios agregados: $${presupuestoFinal}</p>`);
 }
 
-
-// cambiio valor a numero
-cantidadDeInvitados = parseInt(cantidadDeInvitados);
-
-// limitaciones en la cantidad de invitados
-if (cantidadDeInvitados > 60){
-    alert("60 personas es la capacidad maxima del salon!");
-}
-else if (cantidadDeInvitados < 30){
-    alert("30 persoanas es la capacidad minima del salon!");
-}
-else {
-    let costoTotal= cantidadDeInvitados * costoInvitados;
-    alert("El presupuesto totale es de : $" + costoTotal);
-}
-
-}
+calcularPresupuesto();
