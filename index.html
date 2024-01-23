@@ -6,26 +6,39 @@
     <title>Salon de eventos</title>
 </head>
 <body>
-    <button onclick="calcularPresupuesto()" >Calcula tu presupuesto!</button>
+    <form id="formularioPresupuesto">
+        <label for="cantidadInvitados">¿Cuántos invitados son?</label>
+        <input type="number" id="cantidadInvitados" name="cantidadInvitados" required min="0" max="60">
+    
+        <label for="cantidadAdultos">¿Cuántos de estos son adultos?</label>
+        <input type="number" id="cantidadAdultos" name="cantidadAdultos" required min="0">
+    
+        <button type="submit">Calcular Presupuesto</button>
+    </form>
+    
     <div class="lista">
         <ul>
             <li>
-                <p>Fotografía y Filmación valor: $800 </p>
+                <p>1.Fotografía y Filmación valor: $800 </p>
             </li>
             <li>
-                <p>Música y Luces valor: $10000</p>
+                <p>2.Música y Luces valor: $10000</p>
             </li>
             <li>
-                <p>Servicio de Mozos valor: $600</p>
+                <p>3.Servicio de Mozos valor: $600</p>
             </li>
             <li>
-                <p>Animación Infantil valor: $700</p>
+                <p>4.Animación Infantil valor: $700</p>
             </li>
             <li>
-                <p>Candy bar valor: $600</p>
+                <p>5.Candy bar valor: $600</p>
+            </li>
+            <li>
+                <p>6.Terminar</p>
             </li>
         </ul>
     </div>
+    <div id="resultados-container" ></div>
     <script src="./main.js"></script>
 </body>
 </html>
